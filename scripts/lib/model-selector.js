@@ -69,7 +69,7 @@ const TASK_CATEGORIES = {
     description: 'Test generation, test review, coverage improvement',
   },
   documentation: {
-    model: 'sonnet',
+    model: 'haiku',
     description: 'API docs, READMEs, inline documentation',
   },
 

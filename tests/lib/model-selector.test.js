@@ -59,7 +59,7 @@ describe('getModelConfig', () => {
   test('returns config for opus', () => {
     const config = ms.getModelConfig('opus');
     assert.ok(config, 'Expected config object for opus');
-    assert.ok(config.maxTokens > 0, 'Expected positive maxTokens');
+    assert.ok(config.maxOutput > 0, 'Expected positive maxOutput');
   });
 
   test('returns config for sonnet', () => {
@@ -104,7 +104,7 @@ describe('isWithinBudget', () => {
   });
 
   test('returns false with insufficient budget', () => {
-    assert.equal(ms.isWithinBudget('opus', 100000, 50), false);
+    assert.equal(ms.isWithinBudget('opus', 100000, 0.001), false);
   });
 });
 

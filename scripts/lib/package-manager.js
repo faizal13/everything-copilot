@@ -46,13 +46,14 @@ const SUPPORTED_PMS = ['npm', 'yarn', 'pnpm', 'bun'];
 /**
  * Detect the package manager in use by scanning for lockfiles in
  * `projectRoot`.  Returns the name of the detected package manager
- * (`'npm'`, `'yarn'`, `'pnpm'`, or `'bun'`) or `null` if none is found.
+ * (`'npm'`, `'yarn'`, `'pnpm'`, or `'bun'`).  When no lockfile or
+ * `packageManager` field is found, defaults to `'npm'`.
  *
  * Also checks for the `packageManager` field in `package.json` as a
  * secondary signal.
  *
  * @param {string} [projectRoot=process.cwd()] - Directory to inspect.
- * @returns {string|null}
+ * @returns {string}
  */
 function detectPackageManager(projectRoot = process.cwd()) {
   const root = path.resolve(projectRoot);
@@ -81,7 +82,8 @@ function detectPackageManager(projectRoot = process.cwd()) {
     // Ignore parse errors - we will fall through to null.
   }
 
-  return null;
+  // Default to npm — it ships with Node.js and is the safest fallback.
+  return 'npm';
 }
 
 // ---------------------------------------------------------------------------
