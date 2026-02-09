@@ -1,0 +1,63 @@
+name: Skill Sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_repo:
+        description: 'Target repository (owner/repo)'
+        required: true
+        type: string
+      skills_path:
+        description: 'Path to copy skills to in target repo'
+        required: false
+        default: '.copilot/skills'
+        type: string
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly: Sunday midnight UTC
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          path: source
+
+      - name: Checkout target
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.inputs.target_repo }}
+          path: target
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Copy skills to target
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          TARGET_SKILLS="target/${{ github.event.inputs.skills_path }}"
+          mkdir -p "$TARGET_SKILLS"
+          cp -r source/.copilot/skills/* "$TARGET_SKILLS/"
+          echo "Copied skills to $TARGET_SKILLS"
+
+      - name: Create PR in target
+        if: github.event_name == 'workflow_dispatch'
+        working-directory: target
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          BRANCH="skill-sync-$(date +%Y%m%d)"
+          git checkout -b "$BRANCH"
+          git add .
+          if git diff --cached --quiet; then
+            echo "No changes to sync"
+            exit 0
+          fi
+          git commit -m "chore: sync skills from everything-copilot"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "chore: sync skills from everything-copilot" \
+            --body "Automated skill sync from the everything-copilot repository." \
+            --head "$BRANCH"

@@ -1,0 +1,73 @@
+{
+  "name": "github",
+  "description": "GitHub API integration via MCP — repos, issues, PRs, code search",
+  "command": "npx",
+  "args": ["-y", "@modelcontextprotocol/server-github"],
+  "env": {
+    "GITHUB_PERSONAL_ACCESS_TOKEN": "<your-pat-here>"
+  },
+  "capabilities": {
+    "tools": [
+      {
+        "name": "create_issue",
+        "description": "Create a new GitHub issue",
+        "parameters": {
+          "owner": "string — Repository owner",
+          "repo": "string — Repository name",
+          "title": "string — Issue title",
+          "body": "string — Issue body (markdown)",
+          "labels": "array — Label names",
+          "assignees": "array — GitHub usernames"
+        }
+      },
+      {
+        "name": "list_pull_requests",
+        "description": "List pull requests for a repository",
+        "parameters": {
+          "owner": "string",
+          "repo": "string",
+          "state": "string — open | closed | all"
+        }
+      },
+      {
+        "name": "get_file_contents",
+        "description": "Get file contents from a repository",
+        "parameters": {
+          "owner": "string",
+          "repo": "string",
+          "path": "string — File path",
+          "ref": "string — Branch, tag, or commit SHA"
+        }
+      },
+      {
+        "name": "search_code",
+        "description": "Search code across repositories",
+        "parameters": {
+          "query": "string — Search query"
+        }
+      },
+      {
+        "name": "create_pull_request",
+        "description": "Create a new pull request",
+        "parameters": {
+          "owner": "string",
+          "repo": "string",
+          "title": "string",
+          "body": "string",
+          "head": "string — Source branch",
+          "base": "string — Target branch"
+        }
+      }
+    ]
+  },
+  "rate_limits": {
+    "requests_per_hour": 5000,
+    "note": "Authenticated requests. Unauthenticated: 60/hour."
+  },
+  "setup_steps": [
+    "1. Create a PAT at https://github.com/settings/tokens",
+    "2. Grant scopes: repo, read:org (minimum)",
+    "3. Set GITHUB_PERSONAL_ACCESS_TOKEN env var",
+    "4. Run: npx -y @modelcontextprotocol/server-github"
+  ]
+}

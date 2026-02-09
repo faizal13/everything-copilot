@@ -1,0 +1,59 @@
+{
+  "name": "everything-copilot",
+  "version": "1.0.0",
+  "description": "Complete, production-grade GitHub Copilot agent toolkit — universal, domain-agnostic, battle-tested patterns",
+  "main": "scripts/init-copilot.js",
+  "bin": {
+    "everything-copilot": "./bin/ecp.js",
+    "ecp": "./bin/ecp.js"
+  },
+  "scripts": {
+    "init": "node bin/ecp.js init",
+    "validate": "node bin/ecp.js validate",
+    "validate:agents": "node scripts/validate-agents.js",
+    "validate:skills": "node scripts/validate-skills.js",
+    "setup:pm": "node scripts/setup-package-manager.js",
+    "skill:create": "node bin/ecp.js skill:create",
+    "add:skill": "node bin/ecp.js add:skill",
+    "instinct:manage": "node scripts/instinct-manager.js",
+    "doctor": "node bin/ecp.js doctor",
+    "list": "node bin/ecp.js list",
+    "test": "node tests/run-all.js",
+    "test:lib": "node tests/run-all.js --filter=lib",
+    "test:scripts": "node tests/run-all.js --filter=scripts"
+  },
+  "keywords": [
+    "github-copilot",
+    "copilot-agents",
+    "copilot-skills",
+    "ai-coding",
+    "developer-tools",
+    "agent-skills",
+    "context-engineering",
+    "mcp",
+    "claude",
+    "copilot-cli",
+    "copilot-toolkit"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "bin/",
+    ".copilot/",
+    "scripts/",
+    "agents/",
+    "commands/",
+    "contexts/",
+    "mcp-configs/",
+    "examples/",
+    "docs/",
+    "tests/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/everything-copilot.git"
+  }
+}

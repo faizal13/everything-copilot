@@ -1,0 +1,63 @@
+{
+  "name": "my-api",
+  "description": "Custom REST API integration — customize for your API",
+  "command": "npx",
+  "args": ["-y", "@modelcontextprotocol/server-fetch"],
+  "env": {
+    "API_BASE_URL": "https://api.example.com/v1",
+    "API_KEY": "<your-api-key>"
+  },
+  "capabilities": {
+    "tools": [
+      {
+        "name": "api_get",
+        "description": "GET request to the API",
+        "parameters": {
+          "endpoint": "string — Path (e.g. /users)",
+          "query_params": "object — Optional query parameters"
+        }
+      },
+      {
+        "name": "api_post",
+        "description": "POST request to the API",
+        "parameters": {
+          "endpoint": "string",
+          "body": "object — JSON request body"
+        }
+      },
+      {
+        "name": "api_put",
+        "description": "PUT request to the API",
+        "parameters": {
+          "endpoint": "string",
+          "body": "object"
+        }
+      },
+      {
+        "name": "api_delete",
+        "description": "DELETE request to the API",
+        "parameters": {
+          "endpoint": "string"
+        }
+      }
+    ]
+  },
+  "auth": {
+    "type": "bearer",
+    "header": "Authorization",
+    "prefix": "Bearer",
+    "note": "Modify auth type as needed: bearer, api-key, basic, oauth2"
+  },
+  "rate_limits": {
+    "requests_per_minute": 60,
+    "requests_per_hour": 1000,
+    "note": "Adjust based on your API's limits"
+  },
+  "setup_steps": [
+    "1. Replace 'my-api' with your API name",
+    "2. Set API_BASE_URL to your API's base URL",
+    "3. Set API_KEY or configure auth for your method",
+    "4. Customize tools for your endpoints",
+    "5. Update rate_limits to match your API"
+  ]
+}

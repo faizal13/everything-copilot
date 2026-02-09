@@ -1,0 +1,86 @@
+{
+  "name": "custom-tool",
+  "version": "1.0.0",
+  "description": "Template for creating custom MCP tools",
+  "server": {
+    "command": "node",
+    "args": ["path/to/your/mcp-server.js"],
+    "env": {}
+  },
+  "tools": [
+    {
+      "name": "example_read",
+      "description": "Read data from your custom source",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Resource identifier"
+          },
+          "format": {
+            "type": "string",
+            "enum": ["json", "text", "markdown"],
+            "default": "json",
+            "description": "Output format"
+          }
+        },
+        "required": ["id"]
+      }
+    },
+    {
+      "name": "example_write",
+      "description": "Write data to your custom destination",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Resource identifier"
+          },
+          "data": {
+            "type": "object",
+            "description": "Data to write"
+          },
+          "overwrite": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to overwrite existing data"
+          }
+        },
+        "required": ["id", "data"]
+      }
+    },
+    {
+      "name": "example_search",
+      "description": "Search across your custom data source",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query"
+          },
+          "limit": {
+            "type": "integer",
+            "default": 10,
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Max results to return"
+          }
+        },
+        "required": ["query"]
+      }
+    }
+  ],
+  "implementation_guide": {
+    "steps": [
+      "1. Copy this template and rename",
+      "2. Implement an MCP server (Node.js, Python, etc.)",
+      "3. Define tools matching the input_schema above",
+      "4. Handle tool calls and return JSON content blocks",
+      "5. Test: npx @modelcontextprotocol/inspector node path/to/server.js"
+    ],
+    "reference": "https://modelcontextprotocol.io/docs/server/tools"
+  }
+}
